@@ -1,0 +1,71 @@
+Web platform for playing table-top games
+----------------------------------------
+
+- Web server application for multiple players to play multiple, simultaneous table-top games together.  Server app keeps track of the state of each game in a database.  Players interact with the application thru their web browsers.
+
+- Virtual table-top: Provides browser-based representations of game concepts and allows players to perform any appropriate game actions on each type of game object.  Does not need to implement the complete rules for any game: players can take any actions as needed and enforce the rules amongst themselves.  (Some games could implement the rules though).
+
+- Asynchronous play: Players take turns whenever they are able and the system emails players when it is their turn.  Players never have to be online at the same time.
+
+- Possible name:  WATTAGE  (Web Application for Table-Top & Abstract Games) ??
+
+
+Core concepts
+-------------
+
+Games
+	- instances of a subclass of a core Game class
+	- how should variants be dealt with?
+
+
+Players
+	- "players" are different from "registered users"
+		- player instances are associated with a unique game instance
+		- a player object stores game-specific data about that player
+		- a player may be linked to a registered user or to an "anonymous", unregistered user in the database
+	- subclass for games where players have additional attributes
+
+
+Teams
+	- a collection of players
+	- subclass for games where teams have additional attributes
+
+
+Game/Turn Phases
+	- the game server should be able to keep track of the current period and sequence of periods of time as defined by each game's rules
+	
+	- the game server should either automatically advance to the next period in sequence as player's complete a period's mandatory actions or allow players to manually advance the game time as needed
+	
+	- possible types of periods that must be supported:
+		- sequences of global "phases" (eg. "setup" and "play" phases where each has choices for the players to make)
+		
+		- repeating periods: multiple "hands" or rounds of play where each round is essentially the same
+		
+		- sequential turns: one player or team at a time is able to take one or more actions on their turn
+		
+		- simultaneous turns: each player or team is able to take one or more actions simultaneously during a turn (usually without knowing what other players are doing until all have decided)
+		
+		- sequences of "phases" within another period, each with different possible actions (eg. bidding, melding, and trick taking in Pinochle)
+		
+		- combinations of the above (eg. repeating rounds made up of sequential turns where each turn has a sequence of phases; a sequence of phases where each phase might consist of sequential turns (Pinochle's bidding & trick-taking phases), simultaneous actions (Pinochle's melding), other repeating periods, etc.)
+
+
+Game Objects
+	- cards, pieces, tiles, tokens, etc.
+	
+	- each type of object can be a subclass of GameObject and have a set of unique properties
+	
+	- the game server should be able to keep track of changes (usually made manually by players) in the properties and attribute values of objects
+	
+
+Game "Zones" (is there a more general, non-Magic word than "zones"?)
+	- "places" where game objects can exist: areas, squares, cells, or positions on a game board; decks, piles, or hands in card games; abstract play areas  (such as Magic's battlefield, exile, & command zones); ???
+	
+
+Game Actions
+	- all of the individual actions that a player may take in a game
+	  (eg. drawing a card, moving a piece)
+	
+	- actions may be specific to certain game objects, players, teams, zones, or turn phases, or some combination of these factors
+	
+	- the game server should be able to determine a list of actions that might be applicable to each object, player, etc.  It doesn't have to be able to enforce rules about _when_ an action applies, but it should have basic knowledge such "cards can be discarded, but players cannot".
