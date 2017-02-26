@@ -36,3 +36,8 @@ create table wattage_gameplayers (
 );
 
 -- Ex. insert into wattage_gameplayers values (1, 3, 1);
+
+-- How to retrieve the players for a specific game:
+-- select * from wattage_players join wattage_gameplayers 
+--   on wattage_players.id = wattage_gameplayers.player_id and wattage_gameplayers.game_id = 1
+--   order by wattage_gameplayers.play_order;

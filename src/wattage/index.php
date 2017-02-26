@@ -78,6 +78,37 @@ function main() {
 							// display info about the game
 							printf("<p>Game #%d: %s, %d players, started on %s.</p>", $gameid,
 								$row['type_slug'], $row['num_players'], $row['date_started']);
+							printf("<p>Players for game #%d:\n", $gameid);
+
+							// retrieve any players associated with this game
+							$players_tbl = DB_PREFIX . 'players';
+							$gameplayers_tbl = DB_PREFIX . 'gameplayers';
+							$sql = "SELECT * FROM $players_tbl JOIN $gameplayers_tbl " .
+								   "ON $players_tbl.id = $gameplayers_tbl.player_id " .
+								   "AND $gameplayers_tbl.game_id = '$gameid' " .
+								   "ORDER BY $gameplayers_tbl.play_order";
+							$result2 = mysqli_query($dbconn, $sql);
+							if ($result2) {
+								if (mysqli_num_rows($result2) > 0) {
+									while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)) {
+										// display info about the player
+										printf("<br/>Player %d: %s (%s), last active on %s.\n", $row['play_order'],
+											 ($row['anonymous'] ? 'anonymous' : $row['name']),
+											 ($row['anonymous'] ? $row['anon_token'] : $row['username']),
+											 $row['date_last_active']);
+									}
+									echo "</p>\n";
+								}
+								else {
+									echo "<br/>No matching player records for gid=$gameid</p>\n";
+								}
+								mysqli_free_result($result2);
+							}
+							else {
+								printf("<p>Could not retrieve game player records: %s</p>", mysqli_error($dbconn));
+								echo "<p>Query was:<br>$sql</p>";
+							}
+
 							break;
 						}
 					}
