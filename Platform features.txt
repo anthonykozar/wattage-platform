@@ -56,11 +56,13 @@ Game Objects
 	- each type of object can be a subclass of GameObject and have a set of unique properties
 	
 	- the game server should be able to keep track of changes (usually made manually by players) in the properties and attribute values of objects
-	
 
-Game "Zones" (is there a more general, non-Magic word than "zones"?)
+
+Game Locations
 	- "places" where game objects can exist: areas, squares, cells, or positions on a game board; decks, piles, or hands in card games; abstract play areas  (such as Magic's battlefield, exile, & command zones); ???
 	
+	- nestable within each other ?
+
 
 Game Actions
 	- all of the individual actions that a player may take in a game
