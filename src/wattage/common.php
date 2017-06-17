@@ -59,4 +59,24 @@ function PageFooter()
 </html>
 <?php
 }
+
+$CLASS_PATHS = [
+	'Game' => 'games/core/Game.php',
+	'Team' => 'games/core/Team.php',
+	'GameAction' => 'games/core/GameAction.php',
+	'GameLocation' => 'games/core/GameLocation.php',
+	'GameObject' => 'games/core/GameObject.php',
+	'GamePhase' => 'games/core/GamePhase.php',
+	'Player' => 'games/core/Player.php',
+	'Subtract12' => 'games/subtraction/Subtract12.php',
+];
+
+// Called by PHP to load class files on the fly
+function __autoload( $classname )
+{
+	if (array_key_exists($classname, $CLASS_PATHS)) {
+		require_once($CLASS_PATHS[$classname]);
+	}
+}
+
 ?>
