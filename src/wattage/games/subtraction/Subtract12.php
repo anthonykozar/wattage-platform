@@ -4,13 +4,14 @@
 
 class Subtract12 extends Game
 {
-	private pilecount = 0;
+	private $pilecount = 0;
 	
 	function __construct() {
 		parent::__construct();
 		
-		// choice a random number of "beads" for the pile
-		pilecount = rand(5, 20);
+		// choose a random number of "beads" for the pile
+		$pilecount = rand(5, 20);
+		echo "<p>New Subtract12 game has $pilecount beads.</p>";
 	}
 
 }

@@ -72,8 +72,11 @@ $CLASS_PATHS = [
 ];
 
 // Called by PHP to load class files on the fly
-function __autoload( $classname )
+function __autoload($classname)
 {
+	global $CLASS_PATHS;
+	
+	echo "<p>__autoload() called for class $classname</p>";
 	if (array_key_exists($classname, $CLASS_PATHS)) {
 		require_once($CLASS_PATHS[$classname]);
 	}
