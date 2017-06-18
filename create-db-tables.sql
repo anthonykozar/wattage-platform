@@ -41,3 +41,12 @@ create table wattage_gameplayers (
 -- select * from wattage_players join wattage_gameplayers 
 --   on wattage_players.id = wattage_gameplayers.player_id and wattage_gameplayers.game_id = 1
 --   order by wattage_gameplayers.play_order;
+
+-- the gamedata table stores serialized objects of classes Game, GameObject, etc.
+create table wattage_gamedata (
+	id					int(10) not null auto_increment,
+	game_id				int(10) not null,
+	obj_data			longblob not null,
+	primary key (id)
+);
+
